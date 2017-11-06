@@ -1,0 +1,14 @@
+header {
+    background-image: url("https://www.saloniris.com/wp-content/uploads/2017/05/salon-software-salon-iris-1.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 200px;
+    width: 1300px;
+}
+
+body {
+    background-color: #d0d7e2;
+}
+ol li {
+    font-size: 25px;
+}

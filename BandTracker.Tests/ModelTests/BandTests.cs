@@ -91,22 +91,22 @@ namespace BandTracker.Tests
         [TestMethod]
         public void Delete_DeletesBandAssociationsFromDatabase_BandList()
         {
-          //Arrange
-          Venue testVenue = new Venue("Bangalore");
-          testVenue.Save();
+            //Arrange
+            Venue testVenue = new Venue("Bangalore");
+            testVenue.Save();
 
-          Band testBand = new Band("Pink Floyd");
-          testBand.Save();
+            Band testBand = new Band("Pink Floyd");
+            testBand.Save();
 
-          //Act
-          testBand.AddVenue(testVenue);
-          testBand.DeleteBand();
+            //Act
+            testBand.AddVenue(testVenue);
+            testBand.DeleteBand();
 
-          List<Band> resultVenueBands = testVenue.GetBands();
-          List<Band> testVenueBands = new List<Band> {};
+            List<Band> resultVenueBands = testVenue.GetBands();
+            List<Band> testVenueBands = new List<Band> {};
 
-          //Assert
-          CollectionAssert.AreEqual(testVenueBands, resultVenueBands);
+            //Assert
+            CollectionAssert.AreEqual(testVenueBands, resultVenueBands);
         }
 
         [TestMethod]
@@ -155,38 +155,20 @@ namespace BandTracker.Tests
             CollectionAssert.AreEqual(testList, savedVenues);
         }
 
+        [TestMethod]
+        public void Update_UpdatesBandInDatabase_String()
+        {
+            //Arrange
 
-        //   [TestMethod]
-        //   public void Update_UpdatesBandInDatabase_String()
-        //   {
-        //     //Arrange
-        //
-        //     Band testBand = new Band("Pink Floyd", "Fiction");
-        //     testBand.Save();
-        //
-        //     //Act
-        //     testBand.UpdateBand("History", "Comedy");
-        //     Band result = Band.Find(testBand.GetId());
-        //
-        //     //Assert
-        //     Assert.AreEqual(testBand, result);
-        //   }
-        //
-        //   [TestMethod]
-        //   public void DeleteBand_DeleteBandInDatabase_Null()
-        //   {
-        //     //Arrange
-        //     string title = "Pink Floyd";
-        //     Band testBand = new Band(title, "Fiction");
-        //     testBand.Save();
-        //     // string deletedBand = "";
-        //
-        //     //Act
-        //     testBand.DeleteBand();
-        //     int result = Band.GetAll().Count;
-        //
-        //     //Assert
-        //     Assert.AreEqual(0, result);
-        // }
+            Band testBand = new Band("Pink Floyd");
+            testBand.Save();
+
+            //Act
+            testBand.UpdateBand("Nirvana");
+            Band result = Band.Find(testBand.GetId());
+
+            //Assert
+            Assert.AreEqual(testBand, result);
+        }    
     }
 }
