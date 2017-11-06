@@ -1,5 +1,5 @@
 @{
-  Layout = "_Layout";
+    Layout = "_Layout";
 
 }
 
@@ -7,12 +7,12 @@
     <div class="container-fluid">
         <h2>Bands</h2>
 
-    <form action="/bands/@Model.GetId()/edit" method="post">
-      <label for="new-bandname">Name:</label>
-      <input type="text" name="new-bandname" value="@Model.GetBandName()" required>
-      <button type="submit">Update</button>
-    </form>
-    <br>
-    <h4><a href="/viewcategories">Category</a></h4>
-    <h4><a href="/">Home</a></h4>
-  </div>
+        <form action="/bands/@Model.GetId()/edit" method="post">
+            <label for="new-bandname">Name:</label>
+            <input type="text" name="new-bandname" value="@Model.GetBandName()" required>
+            <button type="submit">Update</button>
+        </form>
+        <br>
+        <h4><a href="/viewcategories">Category</a></h4>
+        <h4><a href="/">Home</a></h4>
+    </div>
