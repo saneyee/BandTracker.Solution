@@ -1,0 +1,20 @@
+@{
+    Layout = "_Layout";
+}
+
+
+<body>
+    <div class="container-fluid">
+        <h2>Bands</h2>
+        <h2>Add new Band</h2>
+        <hr />
+        <form action="/bands/new" method="post">
+          <label for="band-name">Band Name:</label>
+          <input id="band-name" name="band-name" type="text" required>
+          <button type="submit">Add</button>
+        </form>
+        <br>
+        <h4><a href="/viewcategories">Category</a></h4>
+        <h4><a href="/">Home</a></h4>
+    </div>
+</body>

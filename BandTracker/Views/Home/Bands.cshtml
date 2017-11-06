@@ -1,0 +1,22 @@
+@{
+    Layout = "_Layout";
+}
+
+
+<body>
+    <div class="container-fluid">
+        <h2>Bands</h2>
+        @if (Model.Count != 0)
+        {
+            @foreach (var band in Model)
+            {
+                <h4><a href="/bands/@band.GetId()">@band.GetBandName() | <a href="/bands/@band.GetId()/edit">Edit</a>
+                | <a href="/bands/@band.GetId()/delete">Delete </a></h4>
+            }
+        }
+        <br>
+        <h4><a href="/bands/new">Add a new Band</a></h4>
+        <h4><a href="/viewcategories">Category</a></h4>
+        <h4><a href="/">Home</a></h4>
+    </div>
+</body>

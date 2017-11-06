@@ -1,14 +1,12 @@
-header {
-    background-image: url("https://www.saloniris.com/wp-content/uploads/2017/05/salon-software-salon-iris-1.jpg");
-    background-repeat: no-repeat;
-    background-position: center;
-    height: 200px;
-    width: 1300px;
-}
 
 body {
-    background-color: #d0d7e2;
+    background-image: url("https://benonicitytimes.co.za/wp-content/uploads/sites/26/2014/04/band.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    text-align: center;
 }
+
 ol li {
+    list-style-type: none;
     font-size: 25px;
 }
