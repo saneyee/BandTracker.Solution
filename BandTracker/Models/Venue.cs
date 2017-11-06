@@ -169,7 +169,7 @@ namespace BandTracker.Models
       MySqlConnection conn = DB.Connection();
       conn.Open();
       var cmd = conn.CreateCommand() as MySqlCommand;
-      cmd.CommandText = @"DELETE FROM venues WHERE id = @VenueId; DELETE FROM books_venues WHERE venue_id = @VenueId;";
+      cmd.CommandText = @"DELETE FROM venues WHERE id = @VenueId; DELETE FROM bands_venues WHERE venue_id = @VenueId;";
 
       MySqlParameter venueIdParameter = new MySqlParameter();
       venueIdParameter.ParameterName = "@VenueId";
@@ -208,35 +208,87 @@ namespace BandTracker.Models
       }
     }
 
-    public List<Band> GetBands()
-   {
-     MySqlConnection conn = DB.Connection();
-     conn.Open();
-     var cmd = conn.CreateCommand() as MySqlCommand;
-     cmd.CommandText = @"SELECT bands.* FROM venues JOIN bands_venues ON (venues.id = bands_venues.venue_id) JOIN bands ON (bands_venues.venue_id = bands.id) WHERE venues.id = @VenueId;";
+  //   public List<Band> GetBands()
+  //  {
+  //    MySqlConnection conn = DB.Connection();
+  //    conn.Open();
+  //    var cmd = conn.CreateCommand() as MySqlCommand;
+  //    cmd.CommandText = @"SELECT bands.* FROM venues JOIN bands_venues ON (venues.id = bands_venues.venue_id) JOIN bands ON (bands_venues.venue_id = bands.id) WHERE venues.id = @VenueId;";
+  //
+  //    MySqlParameter venueId = new MySqlParameter();
+  //    venueId.ParameterName = "@VenueId";
+  //    venueId.Value = _id;
+  //    cmd.Parameters.Add(venueId);
+  //
+  //    var rdr = cmd.ExecuteReader() as MySqlDataReader;
+  //    List<Band> bands = new List<Band>{};
+  //
+  //    while(rdr.Read())
+  //    {
+  //      int bandId = rdr.GetInt32(0);
+  //      string bandName = rdr.GetString(1);
+  //      Band newBand = new Band(bandName, bandId);
+  //      bands.Add(newBand);
+  //    }
+  //    conn.Close();
+  //    if (conn != null)
+  //    {
+  //      conn.Dispose();
+  //    }
+  //    return bands;
+  //  }
+  //
+  // }
+  public List<Band> GetBands()
+    {
+      MySqlConnection conn = DB.Connection();
+      conn.Open();
+      var cmd = conn.CreateCommand() as MySqlCommand;
+      cmd.CommandText = @"SELECT band_id FROM bands_venues WHERE venue_id = @venueId;";
 
-     MySqlParameter venueId = new MySqlParameter();
-     venueId.ParameterName = "@VenueId";
-     venueId.Value = _id;
-     cmd.Parameters.Add(venueId);
+      MySqlParameter venueIdParameter = new MySqlParameter();
+      venueIdParameter.ParameterName = "@venueId";
+      venueIdParameter.Value = _id;
+      cmd.Parameters.Add(venueIdParameter);
 
-     var rdr = cmd.ExecuteReader() as MySqlDataReader;
-     List<Band> bands = new List<Band>{};
+      var rdr = cmd.ExecuteReader() as MySqlDataReader;
 
-     while(rdr.Read())
-     {
-       int bandId = rdr.GetInt32(0);
-       string bandName = rdr.GetString(1);
-       Band newBand = new Band(bandName, bandId);
-       bands.Add(newBand);
-     }
-     conn.Close();
-     if (conn != null)
-     {
-       conn.Dispose();
-     }
-     return bands;
-   }
+      List<int> bandIds = new List<int> {};
+      while(rdr.Read())
+      {
+          int bandId = rdr.GetInt32(0);
+          bandIds.Add(bandId);
+      }
+      rdr.Dispose();
 
-  }
+      List<Band> bands = new List<Band> {};
+      foreach (int bandId in bandIds)
+      {
+          var bandQuery = conn.CreateCommand() as MySqlCommand;
+          bandQuery.CommandText = @"SELECT * FROM bands WHERE id = @BandId;";
+
+          MySqlParameter bandIdParameter = new MySqlParameter();
+          bandIdParameter.ParameterName = "@BandId";
+          bandIdParameter.Value = bandId;
+          bandQuery.Parameters.Add(bandIdParameter);
+
+          var bandQueryRdr = bandQuery.ExecuteReader() as MySqlDataReader;
+          while(bandQueryRdr.Read())
+          {
+              int thisBandId = bandQueryRdr.GetInt32(0);
+              string bandName = bandQueryRdr.GetString(1);
+              Band foundBand = new Band(bandName, thisBandId);
+              bands.Add(foundBand);
+          }
+          bandQueryRdr.Dispose();
+      }
+      conn.Close();
+      if (conn != null)
+      {
+          conn.Dispose();
+      }
+      return bands;
+    }
+}
+
 }

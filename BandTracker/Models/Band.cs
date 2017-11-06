@@ -135,58 +135,54 @@ namespace BandTracker.Models
             }
         }
 
-        // public void DeleteBand()
-        // {
-        //   MySqlConnection conn = DB.Connection();
-        //   conn.Open();
-        //
-        //   var cmd = conn.CreateCommand() as MySqlCommand;
-        //   cmd.CommandText = @"DELETE FROM bands WHERE id = @BandId; DELETE FROM bands_venues WHERE band_id = @BandId;";
-        //
-        //   MySqlParameter bandIdParameter = new MySqlParameter();
-        //   bandIdParameter.ParameterName = "@BandId";
-        //   bandIdParameter.Value = this.GetId();
-        //
-        //   cmd.Parameters.Add(bandIdParameter);
-        //   cmd.ExecuteNonQuery();
-        //
-        //   if (conn != null)
-        //   {
-        //     conn.Close();
-        //   }
-        // }
+        public void DeleteBand()
+        {
+          MySqlConnection conn = DB.Connection();
+          conn.Open();
 
-        // public void UpdateBand(string newBandBandName, string newBandGenre)
-        // {
-        //   MySqlConnection conn = DB.Connection();
-        //   conn.Open();
-        //   var cmd = conn.CreateCommand() as MySqlCommand;
-        //   cmd.CommandText = @"UPDATE bands SET bandName = @newBandBandName, genre = @newBandGenre WHERE id = @searchId;";
-        //
-        //   MySqlParameter searchId = new MySqlParameter();
-        //   searchId.ParameterName = "@searchId";
-        //   searchId.Value = _id;
-        //   cmd.Parameters.Add(searchId);
-        //
-        //   MySqlParameter bandBandName = new MySqlParameter();
-        //   bandBandName.ParameterName = "@newBandBandName";
-        //   bandBandName.Value = newBandBandName;
-        //   cmd.Parameters.Add(bandBandName);
-        //
-        //   MySqlParameter bandGenre = new MySqlParameter();
-        //   bandGenre.ParameterName = "@newBandGenre";
-        //   bandGenre.Value = newBandGenre;
-        //   cmd.Parameters.Add(bandGenre);
-        //
-        //   cmd.ExecuteNonQuery();
-        //   _bandName = newBandBandName;
-        //   _genre = newBandGenre;
-        //
-        //   conn.Close();
-        //   if (conn != null)
-        //   {
-        //       conn.Dispose();
-        //   }
+          var cmd = conn.CreateCommand() as MySqlCommand;
+          cmd.CommandText = @"DELETE FROM bands WHERE id = @BandId; DELETE FROM bands_venues WHERE band_id = @BandId;";
+
+          MySqlParameter bandIdParameter = new MySqlParameter();
+          bandIdParameter.ParameterName = "@BandId";
+          bandIdParameter.Value = this.GetId();
+
+          cmd.Parameters.Add(bandIdParameter);
+          cmd.ExecuteNonQuery();
+
+          if (conn != null)
+          {
+            conn.Close();
+          }
+        }
+
+        public void UpdateBand(string newBandName)
+        {
+          MySqlConnection conn = DB.Connection();
+          conn.Open();
+          var cmd = conn.CreateCommand() as MySqlCommand;
+          cmd.CommandText = @"UPDATE bands SET band_name = @newBandName WHERE id = @searchId;";
+
+          MySqlParameter searchId = new MySqlParameter();
+          searchId.ParameterName = "@searchId";
+          searchId.Value = _id;
+          cmd.Parameters.Add(searchId);
+
+          MySqlParameter bandName = new MySqlParameter();
+          bandName.ParameterName = "@newBandName";
+          bandName.Value = newBandName;
+          cmd.Parameters.Add(bandName);
+
+          cmd.ExecuteNonQuery();
+          _bandName = newBandName;
+
+
+          conn.Close();
+          if (conn != null)
+          {
+              conn.Dispose();
+          }
+
         public List<Venue> GetVenues()
         {
             MySqlConnection conn = DB.Connection();
